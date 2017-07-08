@@ -1,0 +1,19 @@
+{
+  "name": "vscode_gulp_template",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "rebuild_debug"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kusa-mochi/vscode_gulp_template.git"
+  },
+  "author": "Mochi",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/kusa-mochi/vscode_gulp_template/issues"
+  },
+  "homepage": "https://github.com/kusa-mochi/vscode_gulp_template#readme"
+}
