@@ -1,20 +1,22 @@
 {
-    "version": "0.1.0",
-    "command": "gulp",
-    "isShellCommand": true,
-    "showOutput": "never",
-    "suppressTaskName": false,
-    "args": [ "--no-color" ],
-    "tasks": [
-        {
-            "taskName": "rebuild_debug",
-            "showOutput": "silent",
-            "isBuildCommand": true,
-            "isWatching": false,
-            "problemMatcher": [
-                "$tsc",
-                "$gulp-tsc"
-            ]
-        }
-    ]
+	"version": "0.1.0",
+	"command": "gulp",
+	"isShellCommand": true,
+	"showOutput": "never",
+	"suppressTaskName": false,
+	"args": [
+		"--no-color"
+	],
+	"tasks": [
+		{
+			"taskName": "rebuild_debug",
+			"showOutput": "silent",
+			"isBuildCommand": true,
+			"isWatching": false,
+			"problemMatcher": [
+				"$tsc",
+				"$gulp-tsc"
+			]
+		}
+	]
 }
