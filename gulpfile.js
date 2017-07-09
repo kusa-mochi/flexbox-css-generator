@@ -1,28 +1,31 @@
 // to run tasks, do Ctrl+Shift+B
 
+var sourceDirName = "./src";
 var outputFileName = "index.js";
-var debugDirName = "./output/debug/";
-var releaseDirName = "./output/release/";
+var outputDirName = "./output";
+var debugDirName = "./output/debug";
+var releaseDirName = "./output/release";
 var wrappedDirName = "./wrapped/";
 var binaryDirName = "./bin/";
 var gulp = require('gulp');
+var path = require('path');
 
 
 
 var del = require("del");
 gulp.task('clean_all', function (cb) {
 	del([
-		'./output/**/*'
+		path.join(outputDirName, '**/*')
 	], cb);
 });
 gulp.task('clean_debug', function (cb) {
 	del([
-		'./output/debug/**/*'
+		path.join(debugDirName, '**/*')
 	], cb);
 });
 gulp.task('clean_release', function (cb) {
 	del([
-		'./output/release/**/*'
+		path.join(releaseDirName, '**/*')
 	], cb);
 });
 
@@ -32,11 +35,11 @@ var pug = require('gulp-pug');
 gulp.task('pug', function () {
 	var option = { pretty: true }
 	gulp.src([
-		'./src/**/*.pug',
+		path.join(sourceDirName, '**/*.pug'),
 		'!./node_modules/**'
 	]).pipe(plumber())
 		.pipe(pug(option))
-		.pipe(gulp.dest('./output/debug'));
+		.pipe(gulp.dest(debugDirName));
 });
 
 
@@ -46,12 +49,12 @@ var autoprefixer = require('gulp-autoprefixer');
 var plumber = require('gulp-plumber');  // error handling
 gulp.task('sass', function () {
 	gulp.src([
-		'./src/**/*.scss',
+		path.join(sourceDirName, '**/*.scss'),
 		'!./node_modules/**'    // except files below node_modules folder
 	]).pipe(plumber())
 		.pipe(sass())
 		.pipe(autoprefixer())
-		.pipe(gulp.dest('./output/debug/css'));
+		.pipe(gulp.dest(path.join(debugDirName, 'css')));
 });
 
 
@@ -59,10 +62,10 @@ gulp.task('sass', function () {
 var typescript = require('gulp-typescript');
 gulp.task('ts', function () {
 	gulp.src([
-		'./src/ts/**/*.ts',
+		path.join(sourceDirName, 'ts/**/*.ts'),
 		'!./node_modules/**'    // except files below node_modules folder
 	]).pipe(typescript())
-		.pipe(gulp.dest('./output/debug/js'));
+		.pipe(gulp.dest(path.join(debugDirName, 'js')));
 });
 
 
@@ -77,7 +80,7 @@ var insert = require("gulp-insert");
 var minify = require("gulp-closurecompiler");
 gulp.task("release", ["rebuild_debug"], function () {
 	return gulp.
-		src(debugDirName + outputFileName)
+		src(path.join(debugDirName, outputFileName))
 		.pipe(newer(releaseDirName))
 		.pipe(insert.wrap("(function() {\nvar NDEBUG=true;\n", "\n})();"))
 		.pipe(gulp.dest(wrappedDirName))
