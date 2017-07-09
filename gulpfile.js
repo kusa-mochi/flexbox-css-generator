@@ -31,6 +31,20 @@ gulp.task('clean_release', function (cb) {
 
 
 
+gulp.task('copy', function () {
+	// copy library js files to output folder.
+	gulp.src([
+		path.join(sourceDirName, 'lib/js/**/*.js')
+	]).pipe(gulp.dest(path.join(debugDirName, 'js')));
+
+	// copy library css files to output folder.
+	gulp.src([
+		path.join(sourceDirName, 'lib/css/**/*.css')
+	]).pipe(gulp.dest(path.join(debugDirName, 'css')));
+});
+
+
+
 var pug = require('gulp-pug');
 gulp.task('pug', function () {
 	var option = { pretty: true }
@@ -92,6 +106,7 @@ gulp.task("release", ["rebuild_debug"], function () {
 
 gulp.task('rebuild_debug', function () {
 	gulp.start('clean_debug');
+	gulp.start('copy');
 	gulp.start('pug');
 	gulp.start('sass');
 	gulp.start('ts');
