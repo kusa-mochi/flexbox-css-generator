@@ -28,6 +28,19 @@ gulp.task('clean_release', function (cb) {
 
 
 
+var pug = require('gulp-pug');
+gulp.task('pug', function () {
+	var option = { pretty: true }
+	gulp.src([
+		'./src/**/*.pug',
+		'!./node_modules/**'
+	]).pipe(plumber())
+		.pipe(pug(option))
+		.pipe(gulp.dest('./output/debug'));
+});
+
+
+
 var sass = require('gulp-sass');
 var autoprefixer = require('gulp-autoprefixer');
 var plumber = require('gulp-plumber');  // error handling
@@ -64,18 +77,19 @@ var insert = require("gulp-insert");
 var minify = require("gulp-closurecompiler");
 gulp.task("release", ["rebuild_debug"], function () {
 	return gulp.
-		src(debugDirName + outputFileName).
-		pipe(newer(releaseDirName)).
-		pipe(insert.wrap("(function() {\nvar NDEBUG=true;\n", "\n})();")).
-		pipe(gulp.dest(wrappedDirName)).
-		pipe(minify({ fileName: outputFileName })).
-		pipe(gulp.dest(releaseDirName));
+		src(debugDirName + outputFileName)
+		.pipe(newer(releaseDirName))
+		.pipe(insert.wrap("(function() {\nvar NDEBUG=true;\n", "\n})();"))
+		.pipe(gulp.dest(wrappedDirName))
+		.pipe(minify({ fileName: outputFileName }))
+		.pipe(gulp.dest(releaseDirName));
 });
 
 
 
 gulp.task('rebuild_debug', function () {
 	gulp.start('clean_debug');
+	gulp.start('pug');
 	gulp.start('sass');
 	gulp.start('ts');
 });
