@@ -21,7 +21,7 @@ gulp.task('clean_all', function (cb) {
 
 
 var typescript = require('gulp-typescript');
-gulp.task('rebuild_debug', function () {
+gulp.task('ts', function () {
     //output options
     var options = {
         out: 'index.js'
@@ -51,4 +51,11 @@ gulp.task("release", ["build"], function () {
         pipe(gulp.dest(wrappedDirName)).
         pipe(minify({ fileName: outputFileName })).
         pipe(gulp.dest(releaseDirName));
+});
+
+
+
+gulp.task('rebuild_debug', function(){
+  gulp.start('clean_all');
+  gulp.start('ts');
 });
