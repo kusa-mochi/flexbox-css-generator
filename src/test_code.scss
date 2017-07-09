@@ -1,0 +1,15 @@
+#test-id {
+	width: 100%;
+
+	.test-class {
+		width: 100%;
+
+		> div {
+			width: 100%;
+
+			&:before {
+				content: '';
+			}
+		}
+	}
+}

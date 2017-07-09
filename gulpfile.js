@@ -13,29 +13,48 @@ var del = require("del");
 gulp.task('clean_all', function (cb) {
     del([
         './output/**/*'
-        //// To exclude files from clean target, cancel the following comment.
-        // '!dist/mobile/deploy.json'
     ], cb);
+});
+gulp.task('clean_debug', function (cb) {
+    del([
+        './output/debug/**/*'
+    ], cb);
+});
+gulp.task('clean_release', function (cb) {
+    del([
+        './output/release/**/*'
+    ], cb);
+});
+
+
+
+var sass = require('gulp-sass');
+var autoprefixer = require('gulp-autoprefixer');
+var plumber = require('gulp-plumber');  // error handling
+gulp.task('sass', function () {
+    gulp.src([
+        './src/**/*.scss',
+        '!./node_modules/**'    // except files below node_modules folder
+    ]).pipe(plumber())
+        .pipe(sass())
+        .pipe(autoprefixer())
+        .pipe(gulp.dest('./output/debug/css'));
 });
 
 
 
 var typescript = require('gulp-typescript');
 gulp.task('ts', function () {
-    //output options
-    var options = {
-        out: 'index.js'
-    };
     gulp.src([
-        './**/*.ts',
-        '!./node_modules/**'// except files below node_modules folder
-    ]).pipe(typescript(options))
-        .pipe(gulp.dest('./output/debug'));
+        './src/ts/**/*.ts',
+        '!./node_modules/**'    // except files below node_modules folder
+    ]).pipe(typescript())
+        .pipe(gulp.dest('./output/debug/js'));
 });
 
 
 var open = require("gulp-open");
-gulp.task("test", ["build"], function () {
+gulp.task("test", ["rebuild_debug"], function () {
     gulp.src("./index-debug.html").pipe(open());
 });
 
@@ -43,7 +62,7 @@ gulp.task("test", ["build"], function () {
 
 var insert = require("gulp-insert");
 var minify = require("gulp-closurecompiler");
-gulp.task("release", ["build"], function () {
+gulp.task("release", ["rebuild_debug"], function () {
     return gulp.
         src(debugDirName + outputFileName).
         pipe(newer(releaseDirName)).
@@ -55,7 +74,8 @@ gulp.task("release", ["build"], function () {
 
 
 
-gulp.task('rebuild_debug', function(){
-  gulp.start('clean_all');
-  gulp.start('ts');
+gulp.task('rebuild_debug', function () {
+    gulp.start('clean_debug');
+    gulp.start('sass');
+    gulp.start('ts');
 });
