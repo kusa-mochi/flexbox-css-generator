@@ -13,23 +13,22 @@ var del = require("del");
 gulp.task('clean_all', function (cb) {
     del([
         './output/**/*'
-        // // このファイルは削除したくないため、パターンを打ち消し
+        //// To exclude files from clean target, cancel the following comment.
         // '!dist/mobile/deploy.json'
     ], cb);
 });
 
 
 
-// var newer = require("gulp-newer");
 var typescript = require('gulp-typescript');
 gulp.task('rebuild_debug', function () {
-    //出力オプション
+    //output options
     var options = {
         out: 'index.js'
     };
     gulp.src([
         './**/*.ts',
-        '!./node_modules/**'//node_modules配下は除外する
+        '!./node_modules/**'// except files below node_modules folder
     ]).pipe(typescript(options))
         .pipe(gulp.dest('./output/debug'));
 });
