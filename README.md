@@ -4,6 +4,7 @@
 
 ### Install
 
+1. run "npm install" in console.
 1. Open root directory by Visual Studio Code.
 1. Click the Extensions icon in the side bar menu.
 1. In the search box, type "task master", and click the "Install" button in "Task Master" extension.
