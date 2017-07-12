@@ -13,20 +13,20 @@ var path = require('path');
 
 
 var del = require("del");
-gulp.task('clean_all', function (cb) {
-	del([
+gulp.task('clean_all', function () {
+	return del([
 		path.join(outputDirName, '**/*')
-	], cb);
+	]);
 });
-gulp.task('clean_debug', function (cb) {
-	del([
+gulp.task('clean_debug', function () {
+	return del([
 		path.join(debugDirName, '**/*')
-	], cb);
+	]);
 });
-gulp.task('clean_release', function (cb) {
-	del([
+gulp.task('clean_release', function () {
+	return del([
 		path.join(releaseDirName, '**/*')
-	], cb);
+	]);
 });
 
 
@@ -49,8 +49,9 @@ var pug = require('gulp-pug');
 gulp.task('pug', function () {
 	var option = { pretty: true }
 	gulp.src([
-		path.join(sourceDirName, '**/*.pug'),
-		'!./node_modules/**'
+		path.join(sourceDirName, './views/**/*.pug'),
+		'!./node_modules/**',
+		'!**/_*.pug'
 	]).pipe(plumber())
 		.pipe(pug(option))
 		.pipe(gulp.dest(debugDirName));
@@ -63,7 +64,7 @@ var autoprefixer = require('gulp-autoprefixer');
 var plumber = require('gulp-plumber');  // error handling
 gulp.task('sass', function () {
 	gulp.src([
-		path.join(sourceDirName, '**/*.scss'),
+		path.join(sourceDirName, './views/**/*.scss'),
 		'!./node_modules/**'    // except files below node_modules folder
 	]).pipe(plumber())
 		.pipe(sass())
@@ -104,10 +105,11 @@ gulp.task("release", ["rebuild_debug"], function () {
 
 
 
-gulp.task('rebuild_debug', function () {
-	gulp.start('clean_debug');
-	gulp.start('copy');
-	gulp.start('pug');
-	gulp.start('sass');
-	gulp.start('ts');
+gulp.task('rebuild_debug', ['clean_debug'], function () {
+	gulp.start([
+		'copy',
+		'pug',
+		'sass',
+		'ts'
+		]);
 });
