@@ -59,6 +59,15 @@ gulp.task('pug', function () {
 
 
 
+var minifyHTML = require('gulp-minify-html');
+gulp.task('minify-html', function() {
+	return gulp.src(path.join(debugDirName, '**/*.html'))
+		.pipe(minifyHTML({ empty: true }))
+		.pipe(gulp.dest(releaseDirName));
+});
+
+
+
 var sass = require('gulp-sass');
 var autoprefixer = require('gulp-autoprefixer');
 var plumber = require('gulp-plumber');  // error handling
@@ -91,20 +100,6 @@ gulp.task("test", ["rebuild_debug"], function () {
 
 
 
-var insert = require("gulp-insert");
-var minify = require("gulp-closurecompiler");
-gulp.task("release", ["rebuild_debug"], function () {
-	return gulp.
-		src(path.join(debugDirName, outputFileName))
-		.pipe(newer(releaseDirName))
-		.pipe(insert.wrap("(function() {\nvar NDEBUG=true;\n", "\n})();"))
-		.pipe(gulp.dest(wrappedDirName))
-		.pipe(minify({ fileName: outputFileName }))
-		.pipe(gulp.dest(releaseDirName));
-});
-
-
-
 gulp.task('rebuild_debug', ['clean_debug'], function () {
 	gulp.start([
 		'copy',
@@ -112,4 +107,12 @@ gulp.task('rebuild_debug', ['clean_debug'], function () {
 		'sass',
 		'ts'
 		]);
+});
+
+
+
+gulp.task('rebuild_release', ['clean_release'], function () {
+	gulp.start([
+		'minify-html'
+	]);
 });
