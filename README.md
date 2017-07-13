@@ -1,10 +1,18 @@
 # vscode_gulp_template
 
+## If you use this, you can ...
+
+- have a **free Web App IDE** for Visual Studio Code in few steps !
+- use **Sass** to make CSS code efficiently !
+- use **TypeScript** to make JavaScript code efficiently !
+- use **Pug** to make HTML code efficiently !
+
 ## Usage
 
 ### Install
 
-1. run "npm install" in console.
+1. Make clone of this repository, or download zip file from download link.
+1. Run "npm install" in console in root directory.
 1. Open root directory by Visual Studio Code.
 1. Click the Extensions icon in the side bar menu.
 1. In the search box, type "task master", and click the "Install" button in "Task Master" extension.
