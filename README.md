@@ -3,6 +3,7 @@
 ## If you use this, you can ...
 
 - have a **free Web App IDE** for Visual Studio Code in few steps !
+- develope Web Apps in **Windows / Mac OS X / Linux** !
 - use **Sass** to make CSS code efficiently !
 - use **TypeScript** to make JavaScript code efficiently !
 - use **Pug** to make HTML code efficiently !
