@@ -93,6 +93,18 @@ gulp.task('ts', function () {
 });
 
 
+
+uglify = require('gulp-uglify');
+gulp.task('uglify-js', function () {
+	gulp.src([
+		path.join(debugDirName, '**/*.js'),
+		'!./node_modules/**'    // except files below node_modules folder
+	]).pipe(uglify())
+		.pipe(gulp.dest(releaseDirName));
+});
+
+
+
 var open = require("gulp-open");
 gulp.task("test", ["rebuild_debug"], function () {
 	gulp.src("./index-debug.html").pipe(open());
@@ -113,6 +125,7 @@ gulp.task('rebuild_debug', ['clean_debug'], function () {
 
 gulp.task('rebuild_release', ['clean_release'], function () {
 	gulp.start([
-		'minify-html'
+		'minify-html',
+		'uglify-js'
 	]);
 });
