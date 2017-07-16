@@ -9,6 +9,8 @@ var wrappedDirName = "./wrapped/";
 var binaryDirName = "./bin/";
 var gulp = require('gulp');
 var path = require('path');
+var plumber = require('gulp-plumber');  // error handling
+var runSequence = require('run-sequence');
 
 
 
@@ -70,9 +72,8 @@ gulp.task('minify-html', function() {
 
 var sass = require('gulp-sass');
 var autoprefixer = require('gulp-autoprefixer');
-var plumber = require('gulp-plumber');  // error handling
 gulp.task('sass', function () {
-	gulp.src([
+	return gulp.src([
 		path.join(sourceDirName, './views/**/*.scss'),
 		'!./node_modules/**'    // except files below node_modules folder
 	]).pipe(plumber())
@@ -83,9 +84,21 @@ gulp.task('sass', function () {
 
 
 
+var tslint = require('gulp-tslint');
+gulp.task('tslint', function () {
+	return gulp.src([
+		path.join(sourceDirName, 'ts/**/*.ts'),
+		'!./node_modules/**'    // except files below node_modules folder
+	]).pipe(plumber())
+		.pipe(tslint())
+		.pipe(tslint.report());
+});
+
+
+
 var typescript = require('gulp-typescript');
 gulp.task('ts', function () {
-	gulp.src([
+	return gulp.src([
 		path.join(sourceDirName, 'ts/**/*.ts'),
 		'!./node_modules/**'    // except files below node_modules folder
 	]).pipe(typescript())
@@ -96,7 +109,7 @@ gulp.task('ts', function () {
 
 uglify = require('gulp-uglify');
 gulp.task('uglify-js', function () {
-	gulp.src([
+	return gulp.src([
 		path.join(debugDirName, '**/*.js'),
 		'!./node_modules/**'    // except files below node_modules folder
 	]).pipe(uglify())
@@ -105,27 +118,28 @@ gulp.task('uglify-js', function () {
 
 
 
-var open = require("gulp-open");
-gulp.task("test", ["rebuild_debug"], function () {
-	gulp.src("./index-debug.html").pipe(open());
+var open = require('gulp-open');
+gulp.task('test', function () {
+	return gulp.src(path.join(debugDirName, 'test_code.html'))
+		.pipe(open());
 });
 
 
 
-gulp.task('rebuild_debug', ['clean_debug'], function () {
-	gulp.start([
-		'copy',
-		'pug',
-		'sass',
-		'ts'
-		]);
+gulp.task('rebuild_debug', function () {
+	runSequence(
+		'clean_debug',
+		['tslint'],
+		['copy', 'pug', 'sass', 'ts']
+	);
 });
 
 
 
-gulp.task('rebuild_release', ['clean_release'], function () {
-	gulp.start([
-		'minify-html',
-		'uglify-js'
-	]);
+gulp.task('rebuild_release', function () {
+	runSequence(
+		'clean_all',
+		'rebuild_debug',
+		['minify-html', 'uglify-js']
+	);
 });

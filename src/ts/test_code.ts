@@ -1,6 +1,6 @@
-interface TestClass {
-	memberA: number;
-	memberB: string;
-}
+// interface TestClass {
+// 	memberA: number;
+// 	memberB: string;
+// }
 
 alert(123);
