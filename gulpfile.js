@@ -7,6 +7,7 @@ var debugDirName = "./output/debug";
 var releaseDirName = "./output/release";
 var wrappedDirName = "./wrapped/";
 var binaryDirName = "./bin/";
+var outputHTMLFileName = "test_code.html"
 var gulp = require('gulp');
 var path = require('path');
 var plumber = require('gulp-plumber');  // error handling
@@ -143,9 +144,10 @@ gulp.task('minify-js', function () {
 
 
 
+// Open the output HTML file using the default OS browser App.
 var open = require('gulp-open');
 gulp.task('test', function () {
-	return gulp.src(path.join(debugDirName, 'test_code.html'))
+	return gulp.src(path.join(debugDirName, outputHTMLFileName))
 		.pipe(open());
 });
 
@@ -155,7 +157,8 @@ gulp.task('rebuild_debug', function () {
 	runSequence(
 		'clean_debug',
 		['tslint'],
-		['copy_debug', 'pug', 'sass', 'ts']
+		['copy_debug', 'pug', 'sass', 'ts'],
+		'test'
 	);
 });
 
