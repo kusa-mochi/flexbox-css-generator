@@ -17,9 +17,12 @@
   },
   "homepage": "https://github.com/kusa-mochi/vscode_gulp_template#readme",
   "devDependencies": {
+    "@types/bootstrap": "^3.3.35",
+    "@types/jquery": "^3.2.8",
     "del": "^3.0.0",
     "gulp": "^3.9.1",
     "gulp-autoprefixer": "^4.0.0",
+    "gulp-clean-css": "^3.7.0",
     "gulp-closurecompiler": "^0.1.0",
     "gulp-insert": "^0.5.0",
     "gulp-minify-html": "^1.0.6",

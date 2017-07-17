@@ -18,7 +18,10 @@
                 "timeEnd",
                 "trace"
             ]
-        }
+        },
+		"no-reference": false,
+		"only-arrow-functions": false,
+		"quotemark": [true, "single"]
     },
     "jsRules": {
         "max-line-length": {

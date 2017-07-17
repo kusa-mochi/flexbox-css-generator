@@ -1,6 +1,8 @@
-// interface TestClass {
-// 	memberA: number;
-// 	memberB: string;
-// }
+/// <reference path="../../node_modules/@types/jquery/index.d.ts" />
+/// <reference path="../../node_modules/@types/bootstrap/index.d.ts" />
 
-alert(123);
+$(document).ready(() => {
+  $('[data-toggle="offcanvas"]').click(() => {
+    $('.row-offcanvas').toggleClass('active');
+  });
+});

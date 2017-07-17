@@ -33,7 +33,7 @@ gulp.task('clean_release', function () {
 
 
 
-gulp.task('copy', function () {
+gulp.task('copy_debug', function () {
 	// copy library js files to output folder.
 	gulp.src([
 		path.join(sourceDirName, 'lib/js/**/*.js')
@@ -43,6 +43,20 @@ gulp.task('copy', function () {
 	gulp.src([
 		path.join(sourceDirName, 'lib/css/**/*.css')
 	]).pipe(gulp.dest(path.join(debugDirName, 'css')));
+});
+
+
+
+gulp.task('copy_release', function () {
+	// copy library js files to output folder.
+	gulp.src([
+		path.join(sourceDirName, 'lib/js/**/*.js')
+	]).pipe(gulp.dest(path.join(releaseDirName, 'js')));
+
+	// copy library css files to output folder.
+	gulp.src([
+		path.join(sourceDirName, 'lib/css/**/*.css')
+	]).pipe(gulp.dest(path.join(releaseDirName, 'css')));
 });
 
 
@@ -84,6 +98,17 @@ gulp.task('sass', function () {
 
 
 
+var minifyCSS = require('gulp-clean-css');
+gulp.task('minify-css', function(){
+	return gulp.src([
+		path.join(debugDirName, '**/*.css'),
+		'!./node_modules/**'    // except files below node_modules folder
+	]).pipe(minifyCSS())
+		.pipe(gulp.dest(releaseDirName));
+});
+
+
+
 var tslint = require('gulp-tslint');
 gulp.task('tslint', function () {
 	return gulp.src([
@@ -108,7 +133,7 @@ gulp.task('ts', function () {
 
 
 uglify = require('gulp-uglify');
-gulp.task('uglify-js', function () {
+gulp.task('minify-js', function () {
 	return gulp.src([
 		path.join(debugDirName, '**/*.js'),
 		'!./node_modules/**'    // except files below node_modules folder
@@ -130,7 +155,7 @@ gulp.task('rebuild_debug', function () {
 	runSequence(
 		'clean_debug',
 		['tslint'],
-		['copy', 'pug', 'sass', 'ts']
+		['copy_debug', 'pug', 'sass', 'ts']
 	);
 });
 
@@ -138,8 +163,7 @@ gulp.task('rebuild_debug', function () {
 
 gulp.task('rebuild_release', function () {
 	runSequence(
-		'clean_all',
-		'rebuild_debug',
-		['minify-html', 'uglify-js']
+		'clean_release',
+		['copy_release', 'minify-html', 'minify-css', 'minify-js']
 	);
 });
