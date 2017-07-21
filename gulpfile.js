@@ -37,12 +37,13 @@ gulp.task('clean_release', function () {
 gulp.task('copy_debug', function () {
 	// copy library js files to output folder.
 	gulp.src([
-		path.join(sourceDirName, 'lib/js/**/*.js')
+		'./node_modules/jquery/dist/jquery.min.js',
+		'./node_modules/bootstrap/dist/js/bootstrap.min.js'
 	]).pipe(gulp.dest(path.join(debugDirName, 'js')));
 
 	// copy library css files to output folder.
 	gulp.src([
-		path.join(sourceDirName, 'lib/css/**/*.css')
+		'./node_modules/bootstrap/dist/css/bootstrap.min.css'
 	]).pipe(gulp.dest(path.join(debugDirName, 'css')));
 });
 
@@ -51,12 +52,13 @@ gulp.task('copy_debug', function () {
 gulp.task('copy_release', function () {
 	// copy library js files to output folder.
 	gulp.src([
-		path.join(sourceDirName, 'lib/js/**/*.js')
+		'./node_modules/jquery/dist/jquery.min.js',
+		'./node_modules/bootstrap/dist/js/bootstrap.min.js'
 	]).pipe(gulp.dest(path.join(releaseDirName, 'js')));
 
 	// copy library css files to output folder.
 	gulp.src([
-		path.join(sourceDirName, 'lib/css/**/*.css')
+		'./node_modules/bootstrap/dist/css/bootstrap.min.css'
 	]).pipe(gulp.dest(path.join(releaseDirName, 'css')));
 });
 
