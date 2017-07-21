@@ -6,7 +6,7 @@
 - develope Web Apps in **Windows / Mac OS X / Linux** !
 - use **Sass** to make CSS code efficiently !
 - use **TypeScript** to make JavaScript code efficiently !
-- use **Pug** to make HTML code efficiently !
+- use **ECT template engine** to make HTML code efficiently !
 
 ## Usage
 
