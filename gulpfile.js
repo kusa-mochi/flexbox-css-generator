@@ -62,16 +62,15 @@ gulp.task('copy_release', function () {
 
 
 
-var pug = require('gulp-pug');
-gulp.task('pug', function () {
-	var option = { pretty: true }
-	gulp.src([
-		path.join(sourceDirName, './views/**/*.pug'),
-		'!./node_modules/**',
-		'!**/_*.pug'
-	]).pipe(plumber())
-		.pipe(pug(option))
-		.pipe(gulp.dest(debugDirName));
+var ect = require('gulp-ect');
+gulp.task('ect', function () {
+	return gulp.src([
+			path.join(sourceDirName, 'views/**/*.html'),
+			'!./node_modules/**',   // except files below node_modules folder
+			'!./**/_*.html'			// except specific name HTML files
+			]).pipe(plumber())
+				.pipe(ect({ext: '.html'}))
+				.pipe(gulp.dest(debugDirName));
 });
 
 
@@ -89,7 +88,7 @@ var sass = require('gulp-sass');
 var autoprefixer = require('gulp-autoprefixer');
 gulp.task('sass', function () {
 	return gulp.src([
-		path.join(sourceDirName, './views/**/*.scss'),
+		path.join(sourceDirName, 'views/**/*.scss'),
 		'!./node_modules/**'    // except files below node_modules folder
 	]).pipe(plumber())
 		.pipe(sass())
@@ -157,7 +156,7 @@ gulp.task('rebuild_debug', function () {
 	runSequence(
 		'clean_debug',
 		['tslint'],
-		['copy_debug', 'pug', 'sass', 'ts'],
+		['copy_debug', 'ect', 'sass', 'ts'],
 		'test'
 	);
 });
