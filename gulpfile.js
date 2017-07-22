@@ -171,3 +171,14 @@ gulp.task('rebuild_release', function () {
 		['copy_release', 'minify-html', 'minify-css', 'minify-js']
 	);
 });
+
+
+
+gulp.task('rebuild_all', function () {
+	runSequence(
+		'clean_all',
+		['tslint'],
+		['copy_debug', 'ect', 'sass', 'ts'],
+		['copy_release', 'minify-html', 'minify-css', 'minify-js']
+	);
+});
