@@ -1,3 +1,5 @@
+@import "../../obj/sprite";
+
 /*
  * Style tweaks
  * --------------------------------------------------
@@ -52,4 +54,32 @@ footer {
 		top: 0;
 		width: 50%; /* 6 columns */
 	}
+}
+
+.list-group {
+	.list-group-item {
+		> div {
+			display: flex;
+			align-items: center;
+		}
+
+		&__label {
+			margin-left: 14px;
+			font-size: 20px;
+		}
+	}
+}
+
+// no sprite image
+.sample_icn_07 {
+	background-image: url(../images/sample_icn_07.png);
+	width: 32px;
+  	height: 32px;
+}
+
+// no sprite image
+.sample_icn_08 {
+	background-image: url(../images/sample_icn_08.png);
+	width: 32px;
+  	height: 32px;
 }
