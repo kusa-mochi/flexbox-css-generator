@@ -34,3 +34,10 @@ body {
 		}
 	}
 }
+
+#content label {
+    border: 1px white solid;
+}
+#content label input[type="radio"] {
+    display: none;
+}

@@ -19,7 +19,7 @@
   "devDependencies": {
     "@types/bootstrap": "^3.3.35",
     "@types/jquery": "^3.2.8",
-    "bootstrap": "^3.3.7",
+    "bootstrap": "^3.4.1",
     "del": "^3.0.0",
     "gulp": "^3.9.1",
     "gulp-autoprefixer": "^4.0.0",
@@ -36,7 +36,7 @@
     "gulp-typescript": "^3.2.0",
     "gulp-uglify": "^3.0.0",
     "gulp.spritesmith": "^6.5.1",
-    "jquery": "^3.2.1",
+    "jquery": "^3.4.1",
     "run-sequence": "^2.0.0",
     "tslint": "^5.5.0",
     "typescript": "^2.4.1"
